@@ -2,17 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
-const knex = require('knex')
+const knex = require('knex');
 
 const db = knex({
   client: 'pg',
   connection: {
     host : '127.0.0.1',
-    user : 'aneagoie',
+    user : 'Owner name',
     password : '',
     database : 'smart-brain'
   }
 });
+
+
 
 const app = express();
 
@@ -65,7 +67,9 @@ app.post('/register', (req, res) => {
           })
       })
       .then(trx.commit)
-      .catch(trx.rollback)
+      // .catch(trx.rollback)
+      .catch(err => res.status(400).json('unable to register user'))
+
     })
     .catch(err => res.status(400).json('unable to register'))
 })
@@ -95,5 +99,5 @@ app.put('/image', (req, res) => {
 })
 
 app.listen(3000, ()=> {
-  console.log('app is running on port 3000');
+  console.log('app is running on server port 3000');
 })
